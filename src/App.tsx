@@ -1,26 +1,33 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+//import { TaskList } from './Components/TaskList';
+import { selectCount } from './Components/store/counterSlice';
+import { useSelector } from 'react-redux';
+import  TaskList  from './Components/TaskList';
+import ArchiveTasks from './Components/store/ArchiveTasks';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const count = useSelector(selectCount);
+    console.log(count.archiveTasks);
+
+    return (
+        <h1>
+            {count.defaultTasks && (
+           <div>
+                    <h2>TASK BOX</h2>
+                    <TaskList loading={false} tasks={count.defaultTasks} />
+            </div>
+                    )}
+            {count.archiveTasks ? (
+                <div>
+                    <h2>Archived Tasks</h2>
+                    <ArchiveTasks loading={false} tasks={count.archiveTasks} />
+                </div>
+             ) : ""}
+        </h1>
+     );
 }
 
 export default App;
